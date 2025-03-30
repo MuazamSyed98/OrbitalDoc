@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MapViewer from "./components/MapViewer";
-import DatePickerPanel from "./components/DatePickerPanel";
 import LoadingSpinner from "./components/LoadingSpinner";
 import ImageSlider from "./components/ImageSlider";
 import SummaryBox from "./components/SummaryBox";

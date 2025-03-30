@@ -1,44 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Rectangle, useMapEvents } from "react-leaflet";
+import React, { useState, useRef } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Rectangle,
+  useMap,
+  useMapEvents,
+} from "react-leaflet";
 
+const MapClickHandler = ({ clicks, setClicks, setBounds, onSelectBounds }) => {
+  useMapEvents({
+    click(e) {
+      const { lat, lng } = e.latlng;
+      const newClicks = [...clicks, [lat, lng]];
+
+      if (newClicks.length === 2) {
+        const sw = newClicks[0];
+        const ne = newClicks[1];
+        const selectedBounds = [
+          [Math.min(sw[0], ne[0]), Math.min(sw[1], ne[1])],
+          [Math.max(sw[0], ne[0]), Math.max(sw[1], ne[1])],
+        ];
+
+        setBounds(selectedBounds);
+        onSelectBounds(selectedBounds);
+        setClicks([]);
+      } else {
+        setClicks(newClicks);
+      }
+    },
+  });
+
+  return null;
+};
+
+const FitBoundsOnChange = ({ bounds }) => {
+  const map = useMap();
+  if (bounds) map.fitBounds(bounds);
+  return null;
+};
 
 const MapViewer = ({ onSelectBounds }) => {
   const [clicks, setClicks] = useState([]);
   const [bounds, setBounds] = useState(null);
-
-  const MapClickHandler = () => {
-    const map = useMapEvents({
-      click(e) {
-        const { lat, lng } = e.latlng;
-        const newClicks = [...clicks, [lat, lng]];
-
-        if (newClicks.length === 2) {
-          const sw = newClicks[0];
-          const ne = newClicks[1];
-          const selectedBounds = [
-            [Math.min(sw[0], ne[0]), Math.min(sw[1], ne[1])], // bottom-left
-            [Math.max(sw[0], ne[0]), Math.max(sw[1], ne[1])] // top-right
-          ];
-
-          setBounds(selectedBounds);
-          onSelectBounds(selectedBounds); // Pass bounds to App.js
-          setClicks([]); // Reset clicks for a new selection
-        } else {
-          setClicks(newClicks);
-        }
-      }
-    });
-
-    return null;
-  };
-
-  // Zoom/pan the map to fit the selected region when bounds are updated
-  useEffect(() => {
-    const map = document.querySelector(".leaflet-container")?.__reactLeaflet?.map;
-    if (bounds && map) {
-      map.fitBounds(bounds);
-    }
-  }, [bounds]);
 
   return (
     <div>
@@ -51,12 +54,17 @@ const MapViewer = ({ onSelectBounds }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapClickHandler />
+        <MapClickHandler
+          clicks={clicks}
+          setClicks={setClicks}
+          setBounds={setBounds}
+          onSelectBounds={onSelectBounds}
+        />
         {bounds && (
-          <Rectangle
-            bounds={bounds}
-            pathOptions={{ color: "blue", weight: 2 }}
-          />
+          <>
+            <Rectangle bounds={bounds} pathOptions={{ color: "blue", weight: 2 }} />
+            <FitBoundsOnChange bounds={bounds} />
+          </>
         )}
       </MapContainer>
 
@@ -65,7 +73,7 @@ const MapViewer = ({ onSelectBounds }) => {
         <button
           onClick={() => {
             setBounds(null);
-            onSelectBounds(null); // Inform App.js about the reset
+            onSelectBounds(null);
           }}
           style={{
             marginTop: "0.5rem",
