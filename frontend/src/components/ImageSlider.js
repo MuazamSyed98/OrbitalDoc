@@ -1,44 +1,31 @@
 import React from "react";
 
-const ImageSlider = ({ before, after }) => {
+const ImageSlider = ({ before, after, dateFrom, dateTo }) => {
   return (
-    <div style={{ padding: "1rem", backgroundColor: "#f0f0f0", borderRadius: "8px" }}>
-      <h3>🖼️ Before & After Image Preview</h3>
+    <div className="orbitaldoc-image-container">
+      <div className="orbitaldoc-image-row">
+        <div className="orbitaldoc-image-box before">
+          {before ? (
+            <img src={before} alt="Before" className="orbitaldoc-image" />
+          ) : (
+            <div className="orbitaldoc-image-placeholder">Before Image</div>
+          )}
+        </div>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "1rem",
-          justifyContent: "center",
-          alignItems: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        {before ? (
-          <div style={{ textAlign: "center" }}>
-            <p><strong>Before</strong></p>
-            <img
-              src={before}
-              alt="Before"
-              style={{ maxWidth: "100%", maxHeight: "300px", borderRadius: "6px", border: "1px solid #ccc" }}
-            />
-          </div>
-        ) : (
-          <p style={{ color: "#999" }}>No before image yet.</p>
-        )}
+        <div className="orbitaldoc-image-divider">➤</div>
 
-        {after ? (
-          <div style={{ textAlign: "center" }}>
-            <p><strong>After</strong></p>
-            <img
-              src={after}
-              alt="After"
-              style={{ maxWidth: "100%", maxHeight: "300px", borderRadius: "6px", border: "1px solid #ccc" }}
-            />
-          </div>
-        ) : (
-          <p style={{ color: "#999" }}>No after image yet.</p>
-        )}
+        <div className="orbitaldoc-image-box after">
+          {after ? (
+            <img src={after} alt="After" className="orbitaldoc-image" />
+          ) : (
+            <div className="orbitaldoc-image-placeholder">After Image</div>
+          )}
+        </div>
+      </div>
+
+      <div className="orbitaldoc-image-labels">
+        <div className="orbitaldoc-date-label">{dateFrom || "Date 1"}</div>
+        <div className="orbitaldoc-date-label">{dateTo || "Date 2"}</div>
       </div>
     </div>
   );

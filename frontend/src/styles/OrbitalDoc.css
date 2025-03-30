@@ -1,0 +1,411 @@
+:root {
+  --bg-main: #f9f9f6;
+  --text-main: #000000;
+  --card-bg: #ffffff;
+  --input-bg: #fff8ef;
+  --border-color: #ddd;
+  --analyze-btn-bg: #4b684e;
+  --analyze-btn-text: #ffffff;
+  --placeholder-text: #aaa;
+  --success-bg: #eafbea;
+  --success-text: #2d7a2d;
+  --image-placeholder-before: #f0dbc2;
+  --image-placeholder-after: #d2e5c2;
+  --image-label-bg: #fff8ef;
+  --image-label-text: #000000;
+}
+
+/* 🌞 LIGHT / SHARED STYLES USING VARIABLES */
+.orbitaldoc-wrapper {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: var(--bg-main);
+}
+
+.orbitaldoc-container {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 95vw;
+  max-width: none;
+}
+
+.orbitaldoc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.orbitaldoc-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.orbitaldoc-subtitle {
+  font-size: 1rem;
+  color: #888;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.orbitaldoc-dates {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.orbitaldoc-date-block {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.875rem;
+  color: var(--text-main);
+}
+
+.orbitaldoc-date-block label {
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.orbitaldoc-date-block input {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background-color: var(--input-bg);
+  font-size: 1rem;
+  color: var(--text-main);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.orbitaldoc-analyze-btn {
+  background-color: var(--analyze-btn-bg);
+  color: var(--analyze-btn-text);
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  align-self: end;
+  margin-top: auto;
+  transition: all 0.2s ease-in-out;
+}
+
+.orbitaldoc-analyze-btn:hover {
+  opacity: 0.9;
+}
+
+.orbitaldoc-error {
+  color: #c0392b;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.orbitaldoc-success {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ✅ IMAGE SLIDER */
+.orbitaldoc-image-container {
+  margin-top: 2rem;
+  width: 60%;
+  margin-left: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1rem;
+  background-color: var(--image-label-bg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.orbitaldoc-image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.orbitaldoc-image-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orbitaldoc-image-box.before {
+  background-color: var(--image-placeholder-before);
+}
+
+.orbitaldoc-image-box.after {
+  background-color: var(--image-placeholder-after);
+}
+
+.orbitaldoc-image-placeholder {
+  padding: 5rem;
+  color: var(--placeholder-text);
+}
+
+.orbitaldoc-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orbitaldoc-image-divider {
+  background-color: var(--image-label-bg);
+  color: var(--image-label-text);
+  font-weight: bold;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  margin: 0 0.5rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.orbitaldoc-image-labels {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.orbitaldoc-date-label {
+  background-color: var(--image-label-bg);
+  color: var(--image-label-text);
+  padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 🌘 DARK MODE VARIABLES OVERRIDE */
+[data-theme="dark"] {
+  --bg-main: #1a1c1e;
+  --text-main: #f1f1f1;
+  --card-bg: #2a2d31;
+  --input-bg: #222;
+  --border-color: #444;
+  --analyze-btn-bg: #4b684e;
+  --analyze-btn-text: #ffffff;
+  --placeholder-text: #888;
+  --success-bg: #263f26;
+  --success-text: #b6f3b6;
+  --image-placeholder-before: #4b3b2e;
+  --image-placeholder-after: #35523a;
+  --image-label-bg: #1a1c1e;
+  --image-label-text: #f1f1f1;
+}
+
+/* 🌗 TOGGLE + HEADER */
+.theme-toggle-btn {
+  margin-left: 1rem;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--analyze-btn-bg);
+  color: var(--analyze-btn-text);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  opacity: 0.85;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.orbitaldoc-clear-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: #ffdddd;
+  border: 1px solid #cc0000;
+  border-radius: 6px;
+  color: #cc0000;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orbitaldoc-clear-btn:hover {
+  background-color: #ffcccc;
+}
+
+[data-theme="dark"] .orbitaldoc-clear-btn {
+  background-color: #331111;
+  border-color: #cc4444;
+  color: #ff8888;
+}
+
+.orbitaldoc-summary-placeholder {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 2px dashed #ccc;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.orbitaldoc-summary-box {
+  background-color: #e8fce8;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.orbitaldoc-summary-title {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.orbitaldoc-summary-icon {
+  background: linear-gradient(45deg, #4caf50, #81c784);
+  padding: 0.5rem;
+  border-radius: 50%;
+}
+
+.orbitaldoc-summary-section {
+  background-color: #f1f8e9;
+  border: 1px solid #b9f6ca;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.orbitaldoc-summary-label {
+  font-weight: bold;
+  color: #424242;
+  margin: 0;
+}
+
+.orbitaldoc-summary-value {
+  color: #1b5e20;
+  margin: 0;
+}
+
+.orbitaldoc-summary-score {
+  color: #424242;
+  margin: 0.5rem 0;
+}
+
+.orbitaldoc-score-value {
+  color: #ff5722;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.orbitaldoc-summary-message {
+  color: #2e7d32;
+  margin: 0.5rem 0;
+}
+
+.orbitaldoc-summary-note {
+  color: #888;
+  font-style: italic;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .orbitaldoc-summary-box {
+  background-color: #1c2c1c;
+  color: #cfcfcf;
+}
+
+[data-theme="dark"] .orbitaldoc-summary-placeholder {
+  background-color: #2c2c2c;
+  border-color: #555;
+  color: #aaa;
+}
+
+.orbitaldoc-image-score-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* SummaryBox styles */
+.orbitaldoc-summary {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+.orbitaldoc-summary-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+.orbitaldoc-summary-item {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+/* ScoreBox styles */
+.orbitaldoc-score-box {
+  min-width: 120px;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #f0e0c2;
+  color: #3b2c1a;
+}
+
+.orbitaldoc-score-title {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.orbitaldoc-score-value {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+/* Dark mode for score box */
+[data-theme="dark"] .orbitaldoc-score-box {
+  background-color: #16222e;
+  color: #e0e0e0;
+}
+
+.orbitaldoc-score-label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: inherit;
+}
+
+
