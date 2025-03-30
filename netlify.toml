@@ -1,5 +1,5 @@
 # netlify.toml
 [build]
   base = "frontend"
-  publish = "frontend/build"
+  publish = "build"
   command = "npm run build"
