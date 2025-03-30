@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const ImageSlider = ({ before, after, dateFrom, dateTo }) => {
   return (
     <div className="orbitaldoc-image-container">

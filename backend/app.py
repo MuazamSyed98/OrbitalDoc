@@ -1,12 +1,19 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
-import os
+from ml.predictor import predict_change_class
+import torch
+from torchvision import transforms
 from PIL import Image
 import numpy as np
 from pathlib import Path
 from dotenv import load_dotenv
 from change_detector import detect_change
 from satellite_fetcher import fetch_satellite_images
+
 
 load_dotenv()
 
@@ -55,11 +62,20 @@ def fetch_satellite():
         print("📦 Bounds:", formatted_bounds)
         print("📆 Dates:", date_from, "→", date_to)
 
+        # Ensure pair folder exists for AI training later
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        pair_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "data", "pairs"))
+        os.makedirs(pair_dir, exist_ok=True)  # Create the folder if missing
+
+
         # Fetch images
         before_path, after_path = fetch_satellite_images(formatted_bounds, date_from, date_to)
 
         # ✅ Calculate change score
         change_score, pixel_change_count = calculate_change_score(before_path, after_path)
+
+        ai_prediction = predict_change_class(before_path, after_path)
+
 
         return jsonify({
             "message": "✅ Satellite images fetched successfully",
@@ -67,8 +83,9 @@ def fetch_satellite():
             "afterImage": os.path.relpath(after_path, start=os.path.dirname(__file__)).replace("\\", "/"),
             "change_score": change_score,
             "pixel_change_count": pixel_change_count,
-            "cloud_coverage_percentage": 0  # (Optional) Placeholder for future
-        })
+            "cloud_coverage_percentage": calculate_cloud_coverage(after_path),
+            "ai_prediction": ai_prediction
+})
 
     except Exception as e:
         print("🚨 Error in /api/fetch-satellite:", str(e))
@@ -99,6 +116,23 @@ def calculate_change_score(before_path, after_path):
     change_score = int((pixel_change_count / total_pixels) * 100)
 
     return change_score, int(pixel_change_count)
+
+def calculate_cloud_coverage(image_path, threshold=200):
+    """
+    Estimates cloud coverage by calculating the percentage of pixels
+    above a brightness threshold in a grayscale image.
+    """
+    image = Image.open(image_path).convert("L")  # Grayscale
+    arr = np.array(image)
+
+    # Count bright pixels (likely clouds)
+    cloud_pixels = np.sum(arr > threshold)
+    total_pixels = arr.size
+
+    percentage = (cloud_pixels / total_pixels) * 100
+    return round(percentage, 2)
+
+
 
 
 if __name__ == "__main__":

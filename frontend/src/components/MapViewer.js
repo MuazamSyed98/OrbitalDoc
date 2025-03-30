@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Rectangle, useMapEvents } from "react-leaflet";
 
+
 const MapViewer = ({ onSelectBounds }) => {
   const [clicks, setClicks] = useState([]);
   const [bounds, setBounds] = useState(null);
