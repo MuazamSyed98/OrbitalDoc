@@ -57,22 +57,6 @@ function App() {
         <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
       )}
 
-      {result && (
-        <div
-          style={{
-            marginBottom: "1rem",
-            backgroundColor: "#e8ffe8",
-            padding: "1rem",
-            borderRadius: "8px",
-          }}
-        >
-          <p>
-            <strong>Change Score:</strong> {result.change_score}
-          </p>
-          <p>{result.message}</p>
-        </div>
-      )}
-
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <MapViewer onSelectBounds={setRegionBounds} />
         <DatePickerPanel
@@ -82,7 +66,12 @@ function App() {
           setEndDate={setEndDate}
         />
         <ImageSlider before={beforeImage} after={afterImage} />
-        <SummaryBox />
+        <SummaryBox
+          result={result}
+          startDate={startDate}
+          endDate={endDate}
+          regionBounds={regionBounds}
+        />
         {regionBounds && startDate && endDate && (
           <button
             onClick={handleAnalyze}
