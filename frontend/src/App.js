@@ -45,7 +45,7 @@ function App() {
     }
   
     axios
-      .post("http://localhost:5000/api/fetch-satellite", {
+      .post(`${process.env.REACT_APP_API_BASE_URL}/api/fetch-satellite`, {
         bounds: regionBounds,
         startDate: startDate.toISOString().split("T")[0],
         endDate: endDate.toISOString().split("T")[0],
@@ -54,8 +54,9 @@ function App() {
         console.log("🛰️ Analysis Result:", res.data);
         setResult(res.data);
         if (res.data.beforeImage && res.data.afterImage) {
-          setBeforeImage(`http://localhost:5000/${res.data.beforeImage}`);
-          setAfterImage(`http://localhost:5000/${res.data.afterImage}`);
+          setBeforeImage(`${process.env.REACT_APP_API_BASE_URL}/${res.data.beforeImage}`);
+          setAfterImage(`${process.env.REACT_APP_API_BASE_URL}/${res.data.afterImage}`);
+
         }
       })
       .catch((err) => {
