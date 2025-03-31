@@ -113,6 +113,11 @@ def calculate_cloud_coverage(image_path, threshold=200):
     total_pixels = arr.size
     return round((cloud_pixels / total_pixels) * 100, 2)
 
+@app.route("/ping")
+def ping():
+    return "pong", 200
+
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=True, port=port)
