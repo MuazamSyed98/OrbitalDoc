@@ -5,7 +5,9 @@ import os
 
 # ✅ Resolve absolute path to the model
 MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "change_classifier_model.h5"))
-model = tf.keras.models.load_model(MODEL_PATH)
+
+# Global model cache (starts as None)
+model = None
 
 def preprocess_images(before_path, after_path):
     """
@@ -24,7 +26,12 @@ def preprocess_images(before_path, after_path):
 def predict_change_class(before_path, after_path):
     """
     Returns 1 if the model predicts substantial change, else 0.
+    Lazily loads the model and reuses it to prevent memory bloat.
     """
+    global model
+    if model is None:
+        model = tf.keras.models.load_model(MODEL_PATH)
+        model.compile()  # optional if needed for evaluation
     x = preprocess_images(before_path, after_path)
     pred = model.predict(x)[0][0]
     return int(pred > 0.5)
